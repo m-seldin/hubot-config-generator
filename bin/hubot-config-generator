@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+//
+// Copyright 2016 Michael Seldin
+//     Licensed under the Apache License, Version 2.0 (the "License");
+//     you may not use this file except in compliance with the License.
+//     You may obtain a copy of the License at
+// http://www.apache.org/licenses/LICENSE-2.0
+//     Unless required by applicable law or agreed to in writing,
+//     Software distributed under the License is distributed on an "AS IS" BASIS,
+//     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//     See the License for the specific language governing permissions and limitations under the License.
+//
+//  Author:
+//  Michael Seldin
+
+'use strict';
+const Helpers = require('../lib/helpers.js');
+const HubotConfigGenerator = require('../lib/hubot-config-generator.js');
+const DEFAULT_CONFIG_FILE_NAME  ='envVars.json';
+
+let stdio = require('stdio');
+let ops = stdio.getopt({
+    'hdir':{key:'h',args:1, description: 'Hubot directory'},
+    'loglevel':{args:1, description: 'The logger level'},
+    'config':{args:1,description:'Environment variables config file'}
+});
+
+
+if(ops.loglevel){
+    logger.setLevel(ops.loglevel);
+}
+
+
+let hubotDir = ops.hdir ? ops.hdir : process.cwd();
+let configFile = ops.config ? ops.config : Path.join(process.cwd(),"configs",DEFAULT_CONFIG_FILE_NAME);
+
+logger.debug(`Current working dir : ${hubotDir}`);
+logger.info(`Environment vars configuration file : ${configFile}`);
+
+let configGenerator = new HubotConfigGenerator(ops,configFile);
+
+configGenerator.generateConfig();
+
+
+
