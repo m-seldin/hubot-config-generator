@@ -17,6 +17,7 @@
 const Helpers = require('../lib/helpers.js');
 const HubotConfigGenerator = require('../lib/hubot-config-generator.js');
 const DEFAULT_CONFIG_FILE_NAME  ='envVars.json';
+const DEFAULT_CONFIG_DIRECTORY  ='configs';
 
 let stdio = require('stdio');
 let ops = stdio.getopt({
@@ -36,9 +37,9 @@ let configFile = '';
 if(ops.config)
     configFile = ops.config
 else if (ops.hdir)
-    configFile = Path.join(ops.hdir,"configs",DEFAULT_CONFIG_FILE_NAME);
+    configFile = Path.join(ops.hdir,DEFAULT_CONFIG_DIRECTORY,DEFAULT_CONFIG_FILE_NAME);
 else
-    configFile = Path.join(process.cwd(),"configs",DEFAULT_CONFIG_FILE_NAME);
+    configFile = Path.join(process.cwd(),DEFAULT_CONFIG_DIRECTORY,DEFAULT_CONFIG_FILE_NAME);
 
 logger.debug(`Current working dir : ${hubotDir}`);
 logger.info(`Environment vars configuration file : ${configFile}`);
