@@ -32,14 +32,25 @@ if(ops.loglevel){
 
 
 let hubotDir = ops.hdir ? ops.hdir : process.cwd();
-let configFile = ops.config ? ops.config : Path.join(process.cwd(),"configs",DEFAULT_CONFIG_FILE_NAME);
+let configFile = '';
+if(ops.config)
+    configFile = ops.config
+else if (ops.hdir)
+    configFile = Path.join(ops.hdir,"configs",DEFAULT_CONFIG_FILE_NAME);
+else
+    configFile = Path.join(process.cwd(),"configs",DEFAULT_CONFIG_FILE_NAME);
 
 logger.debug(`Current working dir : ${hubotDir}`);
 logger.info(`Environment vars configuration file : ${configFile}`);
+try {
+    let configGenerator = new HubotConfigGenerator(ops, configFile);
+    configGenerator.generateConfig();
+}catch (e)
+{
+    logger.error(e)
+}
 
-let configGenerator = new HubotConfigGenerator(ops,configFile);
 
-configGenerator.generateConfig();
 
 
 
