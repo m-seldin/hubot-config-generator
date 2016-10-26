@@ -44,7 +44,7 @@ else
 logger.debug(`Current working dir : ${hubotDir}`);
 logger.info(`Environment vars configuration file : ${configFile}`);
 try {
-    let configGenerator = new HubotConfigGenerator(ops, configFile);
+    let configGenerator = new HubotConfigGenerator(hubotDir, configFile);
     configGenerator.generateConfig();
 }catch (e)
 {
