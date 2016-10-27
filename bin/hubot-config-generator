@@ -35,7 +35,7 @@ if(ops.loglevel){
 let hubotDir = ops.hdir ? ops.hdir : process.cwd();
 let configFile = '';
 if(ops.config)
-    configFile = ops.config
+    configFile = ops.config;
 else if (ops.hdir)
     configFile = Path.join(ops.hdir,DEFAULT_CONFIG_DIRECTORY,DEFAULT_CONFIG_FILE_NAME);
 else

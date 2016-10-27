@@ -12,7 +12,7 @@
     "env",
     "variables"
   ],
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Collect configuration variables from external scripts and generate a config file",
   "repository": {
     "type": "git",
