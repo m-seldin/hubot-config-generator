@@ -16,6 +16,8 @@
 'use strict';
 const Helpers = require('../lib/helpers.js');
 const HubotConfigGenerator = require('../lib/hubot-config-generator.js');
+const iManager = require('../lib/hubot-integrations-manager.js');
+
 const DEFAULT_CONFIG_FILE_NAME  ='envVars.json';
 const DEFAULT_CONFIG_DIRECTORY  ='configs';
 
@@ -23,7 +25,8 @@ let stdio = require('stdio');
 let ops = stdio.getopt({
     'hdir':{key:'h',args:1, description: 'Hubot directory'},
     'loglevel':{args:1, description: 'The logger level'},
-    'config':{args:1,description:'Environment variables config file'}
+    'config':{args:1,description:'Environment variables config file'},
+    'add':{args:1,description:'add hubot integration seperated by commas (web/filesystem), this will add the integration into package.json & external-scripts.json'}
 });
 
 
@@ -40,6 +43,11 @@ else if (ops.hdir)
     configFile = Path.join(ops.hdir,DEFAULT_CONFIG_DIRECTORY,DEFAULT_CONFIG_FILE_NAME);
 else
     configFile = Path.join(process.cwd(),DEFAULT_CONFIG_DIRECTORY,DEFAULT_CONFIG_FILE_NAME);
+
+if(ops.add){
+    logger.debug("Integrations to be added : " + ops.add);
+    iManager.addIntegrations(ops.add.split(','));
+}
 
 logger.debug(`Current working dir : ${hubotDir}`);
 logger.info(`Environment vars configuration file : ${configFile}`);
